@@ -12,6 +12,7 @@
       }
     </style>
     <link rel="stylesheet" href="../src/css/bootstrap.calendar.css" type="text/css" />
+    <link rel="stylesheet" href="./css/demo.css" type="text/css" />
 
 
     <!-- jQuery and the Calendar plugin files -->
@@ -21,33 +22,49 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
+          var year = new Date().getFullYear();
 
           var evnts = function(){
               return {
                       "event":
                           [
-                               {"date":"01/01/2012","title":"1"}
-                              ,{"date":"02/02/2012","title":"2"}
-                              ,{"date":"03/03/2012","title":"34"}
-                              ,{"date":"04/04/2012","title":"123"}
-                              ,{"date":"05/05/2012","title":"223"}
-                              ,{"date":"06/06/2012","title":"4"}
-                              ,{"date":"07/07/2012","title":"5"}
-                              ,{"date":"08/08/2012","title":"14"}
-                              ,{"date":"09/09/2012","title":"10"}
-                              ,{"date":"10/10/2012","title":"10"}
-                              ,{"date":"11/11/2012","title":"10"}
-                              ,{"date":"12/12/2012","title":"10"}
+                               {"date":"01/01/" + year,"title":"Event 1"}
+                              ,{"date":"02/02/" + year,"title":"Event 2"}
+                              ,{"date":"03/03/" + year,"title":"Event 3"}
+                              ,{"date":"04/04/" + year,"title":"Event 4"}
+                              ,{"date":"05/05/" + year,"title":"Event 5"}
+                              ,{"date":"06/06/" + year,"title":"Event 6"}
+                              ,{"date":"07/07/" + year,"title":"Event 7"}
+                              ,{"date":"08/08/" + year,"title":"Event 8"}
+                              ,{"date":"09/09/" + year,"title":"Event 9"}
+                              ,{"date":"10/10/" + year,"title":"Event 10"}
+                              ,{"date":"11/11/" + year,"title":"Event 11"}
+                              ,{"date":"12/12/" + year,"title":"Event 12"}
                           ]
                       }
           };
 
-         $('#calendar').Calendar({ 'events': evnts, 'weekStart': 1 })
-         .on('changeDay', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-         .on('onEvent', function(event){ alert(event.day.valueOf() +'-'+ event.month.valueOf() +'-'+ event.year.valueOf() ); })
-         .on('onNext', function(event){ alert("Next"); })
-         .on('onPrev', function(event){ alert("Prev"); })
-         .on('onCurrent', function(event){ alert("Current"); });
+          var periods = function(){
+              return {
+                      "period":
+                          [
+                               {"dtstart":"01/01/" + year,"dtend":"01/11" + year,"class":"blue-period"}
+                              ,{"dtstart":"02/02/" + year,"dtend":"02/12/" + year,"class":"purple-period"}
+                              ,{"dtstart":"03/03/" + year,"dtend":"03/13/" + year,"class":"green-period"}
+                              ,{"dtstart":"04/04/" + year,"dtend":"04/14/" + year,"class":"blue-period"}
+                              ,{"dtstart":"05/05/" + year,"dtend":"05/15/" + year,"class":"purple-period"}
+                              ,{"dtstart":"06/06/" + year,"dtend":"06/16/" + year,"class":"green-period"}
+                              ,{"dtstart":"07/07/" + year,"dtend":"07/17/" + year,"class":"blue-period"}
+                              ,{"dtstart":"08/08/" + year,"dtend":"08/18/" + year,"class":"purple-period"}
+                              ,{"dtstart":"09/09/" + year,"dtend":"09/19/" + year,"class":"green-period"}
+                              ,{"dtstart":"10/10/" + year,"dtend":"10/20/" + year,"class":"blue-period"}
+                              ,{"dtstart":"11/11/" + year,"dtend":"11/21/" + year,"class":"purple-period"}
+                              ,{"dtstart":"12/12/" + year,"dtend":"12/22/" + year,"class":"green-period"}
+                          ]
+              }
+          }
+
+         $('#calendar').Calendar({ 'events': evnts, 'periods': periods, 'weekStart': 1 });
       });
 
     </script>

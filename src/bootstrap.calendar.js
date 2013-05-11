@@ -7,6 +7,10 @@
  * Original author: @ajpiano
  * Further changes, comments: @addyosmani
  * Licensed under the MIT license
+ *
+ * periods management plugin
+ * Original author: @ellmetha
+ * Licensed under the MIT license
  */
 
 
@@ -37,7 +41,8 @@
             msg_months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             msg_today: 'Today',
             msg_events_header: 'Events Today',
-            events: null
+            events: null,
+            periods: null
         },
 
         template =  ''+
@@ -86,6 +91,7 @@
         this.msg_today = this.options.msg_today;        
         this.msg_events_hdr = this.options.msg_events_header;
         this.events = this.options.events;
+        this.periods = this.options.periods;
 
         this.calendar = $(template.replace("%msg_today%",this.msg_today)).appendTo(this.element).on({
                                 click: $.proxy(this.click, this)
@@ -111,6 +117,25 @@
         this.renderCalendar(now);
     };
 
+    Plugin.prototype.renderPeriods = function (periods, elem) {
+        var live_date = this.live_date;
+        for(var i=1; i<=daysInMonth[live_date.getMonth()]; i++){
+            $.each(periods.period, function(){
+                var year = 1900 + live_date.getYear();
+                var month = live_date.getMonth();
+                
+                var view_date = new Date(year, month, i, 0,0,0,0);
+                var dtstart = new Date(this.dtstart);
+                var dtend = new Date(this.dtend);
+
+                if( view_date.getTime() >= dtstart.getTime() && view_date.getTime() <= dtend.getTime() ){
+                    elem.parent('div:first').find('#day_' + i)
+                    .addClass(this.class);
+                }
+            });
+        }
+    };
+
     Plugin.prototype.renderEvents = function (events, elem) {
         var live_date = this.live_date;
         var msg_evnts_hdr = this.msg_events_hdr;
@@ -134,11 +159,19 @@
                     .append('<span class="weekday">' +i+ '</span>')
                     .popover({
                         'title': msg_evnts_hdr,
-                        'content': 'You have ' +this.title+ ' appointments',
+                        'content': this.title,
                         'delay': { 'show': 250, 'hide': 250 }
                     });
                 }
             });
+        }
+    };
+
+    Plugin.prototype.loadPeriods = function () {
+        if(!(this.periods === null)) {
+            if(typeof this.periods == 'function'){
+                this.renderPeriods(this.periods.apply(this, []), this.calendar);
+            }
         }
     };
 
@@ -238,6 +271,7 @@
             _html = "<tr>" +_html+ "</tr>";
             this.calendar.find('.calendar-body').append(_html);
         }
+        this.loadPeriods();
         this.loadEvents();
     };
 
