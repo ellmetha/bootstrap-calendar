@@ -1,12 +1,8 @@
-
-[Bootstrap Calendar](http://github.com/ahmontero/bootstrap-calendar)
+Bootstrap Calendar
 =================
-The aim of this plugin is to have a simple calendar to show events using Bootstrap. For sure it can be improved, and you are welcome to do it!
+The aim of this plugin is to have a simple calendar to show events using Bootstrap. It is also possible to display different periods on the calendar and to specify their classes (css).
 
-
-Demo
-====
-You can try it [here] (http://ahmontero.github.com/bootstrap-calendar/)
+For sure it can be improved, and you are welcome to do it!
 
 
 Requisites
@@ -24,13 +20,23 @@ Quick start
               return {
                       "event":
                           [
-                               {"date":"2012-01-25","title":"1"}
-                              ,{"date":"2012-02-01","title":"2"}
+                               {"date":"01/25/2013","title":"your title"}
+                              ,{"date":"02/01/2013","title":"your title"}
+                          ]
+                      }
+          };
+          
+    var periods = function(){
+              return {
+                      "period":
+                          [
+                               {"dtstart":"05/10/2013","dtend":"05/25/2013","class":"your-css-class"}
+                              ,{"dtstart":"11/26/2013","dtend":"12/04/2013","class":"your-css-class"}
                           ]
                       }
           };
 
-    $('element_to_render_calendar').Calendar({ 'events': evnts,
+    $('element_to_render_calendar').Calendar({ 'events': evnts, 'periods': periods,
         'weekStart': 1 })
         .on('changeDay', function(event){ alert(event.day.valueOf()); })
         .on('onEvent', function(event){ alert(event.day.valueOf()); })
@@ -56,5 +62,7 @@ msg_today: Text for 'Today' button. Default: 'Today'
 
 msg_events_header: Text for events header. Default: 'Events Today',
 
-events: Events to show in the calendar. Format: {"event":[{"date":"2012-01-25", "title":"1"}]}
+events: Events to show in the calendar. Format: {"event":[{"date":"01/25/2013", "title":"title 1"}]}
+
+periods: Periods to show in the calendar. Format: {"period":[{"dtstart":"05/10/2013","dtend":"05/25/2013","class":"your-css-class"}]}
 </pre>
